@@ -24,7 +24,7 @@ LR = 0.1
 DIS = 0.95  # importance of future vs current reward
 EPO = 20000
 SHOW =2000
-def new_discrete_state(state):
+def get_discrete_state(state):
     # get discrete values of environment reset
     dis_state= (state - env.observation_space.low) / discrete_os_win_size
     return tuple(dis_state.astype(np.int))
@@ -37,8 +37,8 @@ for episodes in range(EPO):
         render = True
     else:
         render = False
-    discrete_state = new_discrete_state(env.reset())
-    print(q_table[discrete_state])
+    discrete_state = get_discrete_state(env.reset())
+   # print(q_table[discrete_state])
 
     done=False
 
@@ -46,7 +46,7 @@ for episodes in range(EPO):
         action= np.argmax(q_table[discrete_state]) # check max q value from q table
         new_state , reward , done , _ =env.step(action) # Takes Action 
         # observation, reward, done and info
-        new_discrete_state = new_discrete_state(new_state) # obtain discrete values for new state
+        new_discrete_state = get_discrete_state(new_state) # obtain discrete values for new state
 
         #print(new_state,reward,done,_)
         if render:
